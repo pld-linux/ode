@@ -1,12 +1,13 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl):	ODE jest bibliotek± s³u¿±c± do symulacji dynamiki bry³y sztywnej
 Name:		ode
-Version:	0.039
+Version:	0.5
 Release:	1
+Epoch:		1
 License:	LGPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tgz
-# Source0-md5:	5a6675043791dc432eb56c58d87f6180
+# Source0-md5:	b33b21e04ee9661f27802b6b6c8eefd2
 URL:		http://q12.org/ode/
 BuildRequires:	OpenGL-devel
 BuildRequires:	XFree86-devel
@@ -31,7 +32,7 @@ obiektów w przestrzeni wirtualnej i witrualnych stworzeñ.
 Summary:	Header files for ODE libraries
 Summary(pl):	Pliki nag³ówkowe bibliotek ODE
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	OpenGL-devel
 Requires:	XFree86-devel
 Requires:	libstdc++-devel
@@ -46,7 +47,7 @@ Pliki nag³ówkowe bibliotek ODE.
 Summary:	Static ODE libraries
 Summary(pl):	Statyczne biblioteki ODE
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static ODE libraries.
