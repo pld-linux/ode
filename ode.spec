@@ -26,7 +26,7 @@ creatures.
 %description -l pl
 Open Dynamics Engine (ODE) jest woln± bibliotek± s³u¿±c± do symulacji
 dynamiki bry³y sztywnej. ODE jest u¿yteczne przy symulacji pojazdów,
-obiektów w przestrzeni wirtualnej i witrualnych stworzeñ.
+obiektów w przestrzeni wirtualnej i wirtualnych stworzeñ.
 
 %package devel
 Summary:	Header files for ODE libraries
