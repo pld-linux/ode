@@ -8,6 +8,7 @@ License:	LGPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tgz
 # Source0-md5:	b33b21e04ee9661f27802b6b6c8eefd2
+Patch0:		%{name}-asm.patch
 URL:		http://q12.org/ode/
 BuildRequires:	OpenGL-devel
 BuildRequires:	XFree86-devel
@@ -57,6 +58,7 @@ Statyczne biblioteki ODE.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 %{__make} configure
