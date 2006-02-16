@@ -35,8 +35,8 @@ Summary(pl):	Pliki nag³ówkowe bibliotek ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	OpenGL-devel
-Requires:	XFree86-devel
 Requires:	libstdc++-devel
+Requires:	xorg-lib-libX11-devel
 
 %description devel
 Header files for ODE libraries.
