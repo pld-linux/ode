@@ -2,7 +2,7 @@ Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl):	ODE jest bibliotek± s³u¿±c± do symulacji dynamiki bry³y sztywnej
 Name:		ode
 Version:	0.5
-Release:	3
+Release:	4
 Epoch:		1
 License:	LGPL
 Group:		Libraries
@@ -11,9 +11,9 @@ Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tgz
 Patch0:		%{name}-asm.patch
 URL:		http://ode.org/
 BuildRequires:	OpenGL-devel
-BuildRequires:	XFree86-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
+BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -75,7 +75,7 @@ libtool --mode=link %{__cxx} -o lib/libode.la ode/src/*.lo -rpath %{_libdir}
 	C_FLAGS="-c -fno-rtti -fno-exceptions -ffast-math -Iinclude -DdNODEBUG \
 	%{rpmcflags}"
 libtool --mode=link %{__cxx} -o lib/libdrawstuff.la drawstuff/src/*.lo \
-	-rpath %{_libdir} -L/usr/X11R6/%{_lib} -lX11 -lGL -lGLU
+	-rpath %{_libdir} -lX11 -lGL -lGLU
 
 %install
 rm -rf $RPM_BUILD_ROOT
