@@ -1,5 +1,5 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
-Summary(pl):	ODE jest bibliotek± s³u¿±c± do symulacji dynamiki bry³y sztywnej
+Summary(pl.UTF-8):   ODE jest bibliotekÄ… sÅ‚uÅ¼Ä…cÄ… do symulacji dynamiki bryÅ‚y sztywnej
 Name:		ode
 Version:	0.5
 Release:	4
@@ -24,14 +24,14 @@ simulation of Rigid Body Dynamics. ODE is useful for simulating things
 like vehicles, objects in virtual reality environments, and virtual
 creatures.
 
-%description -l pl
-Open Dynamics Engine (ODE) jest woln± bibliotek± s³u¿±c± do symulacji
-dynamiki bry³y sztywnej. ODE jest u¿yteczne przy symulacji pojazdów,
-obiektów w przestrzeni wirtualnej i wirtualnych stworzeñ.
+%description -l pl.UTF-8
+Open Dynamics Engine (ODE) jest wolnÄ… bibliotekÄ… sÅ‚uÅ¼Ä…cÄ… do symulacji
+dynamiki bryÅ‚y sztywnej. ODE jest uÅ¼yteczne przy symulacji pojazdÃ³w,
+obiektÃ³w w przestrzeni wirtualnej i wirtualnych stworzeÅ„.
 
 %package devel
 Summary:	Header files for ODE libraries
-Summary(pl):	Pliki nag³ówkowe bibliotek ODE
+Summary(pl.UTF-8):   Pliki nagÅ‚Ã³wkowe bibliotek ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	OpenGL-devel
@@ -41,19 +41,19 @@ Requires:	xorg-lib-libX11-devel
 %description devel
 Header files for ODE libraries.
 
-%description devel -l pl
-Pliki nag³ówkowe bibliotek ODE.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe bibliotek ODE.
 
 %package static
 Summary:	Static ODE libraries
-Summary(pl):	Statyczne biblioteki ODE
+Summary(pl.UTF-8):   Statyczne biblioteki ODE
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static ODE libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki ODE.
 
 %prep
