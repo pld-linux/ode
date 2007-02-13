@@ -1,5 +1,5 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
-Summary(pl.UTF-8):   ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
+Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
 Name:		ode
 Version:	0.5
 Release:	4
@@ -31,7 +31,7 @@ obiektów w przestrzeni wirtualnej i wirtualnych stworzeń.
 
 %package devel
 Summary:	Header files for ODE libraries
-Summary(pl.UTF-8):   Pliki nagłówkowe bibliotek ODE
+Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	OpenGL-devel
@@ -46,7 +46,7 @@ Pliki nagłówkowe bibliotek ODE.
 
 %package static
 Summary:	Static ODE libraries
-Summary(pl.UTF-8):   Statyczne biblioteki ODE
+Summary(pl.UTF-8):	Statyczne biblioteki ODE
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
