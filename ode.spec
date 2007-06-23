@@ -2,7 +2,7 @@ Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
 Name:		ode
 Version:	0.8
-Release:	0.1
+Release:	1
 Epoch:		1
 License:	LGPL
 Group:		Libraries
@@ -60,11 +60,15 @@ Statyczne biblioteki ODE.
 %prep
 %setup -q
 %ifarch %{ix86}
-# somebody must check this path on ix86 arch
-#%%patch0 -p1
+%patch0 -p1
 %endif
 
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
 %configure
 %{__make}
 
@@ -73,6 +77,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+mv $RPM_BUILD_ROOT%{_libdir}/libode.so $RPM_BUILD_ROOT%{_libdir}/libode.so.0
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -88,7 +94,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %doc ode/{README,TODO} ode/doc/{main.dox,pix}
-%attr(755,root,root) %{_libdir}/lib*.so
+%attr(755,root,root) %{_libdir}/lib*.so.0
 %{_includedir}/*
 
 %files static
