@@ -79,6 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 mv $RPM_BUILD_ROOT%{_libdir}/libode.so $RPM_BUILD_ROOT%{_libdir}/libode.so.0
+ln -sf libode.so.0 $RPM_BUILD_ROOT%{_libdir}/libode.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -89,14 +90,15 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt README.txt
+%attr(755,root,root) %{_libdir}/libode.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
 %doc ode/{README,TODO} ode/doc/{main.dox,pix}
-%attr(755,root,root) %{_libdir}/lib*.so.0
-%{_includedir}/*
+%attr(755,root,root) %{_bindir}/ode-config
+%attr(755,root,root) %{_libdir}/libode.so
+%{_includedir}/ode
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libode.a
