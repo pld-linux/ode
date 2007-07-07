@@ -11,8 +11,9 @@ Source0:	http://dl.sourceforge.net/opende/%{name}-src-%{version}.zip
 Patch0:		%{name}-asm.patch
 URL:		http://ode.org/
 BuildRequires:	OpenGL-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
 BuildRequires:	unzip
 BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -64,12 +65,12 @@ Statyczne biblioteki ODE.
 %endif
 
 %build
-%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
 %{__automake}
-%configure
+%configure \
+	--enable-soname
 %{__make}
 
 %install
