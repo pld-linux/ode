@@ -8,7 +8,7 @@ License:	LGPL
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/opende/%{name}-src-%{version}.zip
 # Source0-md5:	fb7462ba0af2fbc230cb1b3f79e0acbb
-Patch0:		%{name}-asm.patch
+Patch0:		%{name}-DESTDIR.patch
 URL:		http://ode.org/
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
@@ -60,9 +60,7 @@ Statyczne biblioteki ODE.
 
 %prep
 %setup -q
-%ifarch %{ix86}
 %patch0 -p1
-%endif
 
 %build
 %{__aclocal}
@@ -91,7 +89,8 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt README.txt
-%attr(755,root,root) %{_libdir}/libode.so.0
+%attr(755,root,root) %{_libdir}/libode.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libode.so.0
 
 %files devel
 %defattr(644,root,root,755)
