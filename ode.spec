@@ -1,18 +1,21 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
-Summary(pl):	ODE jest bibliotek± s³u¿±c± do symulacji dynamiki bry³y sztywnej
+Summary(pl.UTF-8):	ODE jest bibliotekÄ… sÅ‚uÅ¼Ä…cÄ… do symulacji dynamiki bryÅ‚y sztywnej
 Name:		ode
-Version:	0.5
+Version:	0.8
 Release:	1
 Epoch:		1
 License:	LGPL
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tgz
-# Source0-md5:	b33b21e04ee9661f27802b6b6c8eefd2
-URL:		http://q12.org/ode/
+Source0:	http://dl.sourceforge.net/opende/%{name}-src-%{version}.zip
+# Source0-md5:	fb7462ba0af2fbc230cb1b3f79e0acbb
+Patch0:		%{name}-DESTDIR.patch
+URL:		http://ode.org/
 BuildRequires:	OpenGL-devel
-BuildRequires:	XFree86-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
+BuildRequires:	unzip
+BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -23,65 +26,59 @@ simulation of Rigid Body Dynamics. ODE is useful for simulating things
 like vehicles, objects in virtual reality environments, and virtual
 creatures.
 
-%description -l pl
-Open Dynamics Engine (ODE) jest woln± bibliotek± s³u¿±c± do symulacji
-dynamiki bry³y sztywnej. ODE jest u¿yteczne przy symulacji pojazdów,
-obiektów w przestrzeni wirtualnej i wirtualnych stworzeñ.
+%description -l pl.UTF-8
+Open Dynamics Engine (ODE) jest wolnÄ… bibliotekÄ… sÅ‚uÅ¼Ä…cÄ… do symulacji
+dynamiki bryÅ‚y sztywnej. ODE jest uÅ¼yteczne przy symulacji pojazdÃ³w,
+obiektÃ³w w przestrzeni wirtualnej i wirtualnych stworzeÅ„.
 
 %package devel
 Summary:	Header files for ODE libraries
-Summary(pl):	Pliki nag³ówkowe bibliotek ODE
+Summary(pl.UTF-8):	Pliki nagÅ‚Ã³wkowe bibliotek ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	OpenGL-devel
-Requires:	XFree86-devel
 Requires:	libstdc++-devel
+Requires:	xorg-lib-libX11-devel
 
 %description devel
 Header files for ODE libraries.
 
-%description devel -l pl
-Pliki nag³ówkowe bibliotek ODE.
+%description devel -l pl.UTF-8
+Pliki nagÅ‚Ã³wkowe bibliotek ODE.
 
 %package static
 Summary:	Static ODE libraries
-Summary(pl):	Statyczne biblioteki ODE
+Summary(pl.UTF-8):	Statyczne biblioteki ODE
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Static ODE libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Statyczne biblioteki ODE.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
-%{__make} configure
-%{__make} ode-lib \
-	CC="libtool --mode=compile %{__cc}" \
-	C_FLAGS="-c -fno-rtti -fno-exceptions -ffast-math -Iinclude -DdNODEBUG \
-	%{rpmcflags}"
-libtool --mode=link %{__cxx} -o lib/libode.la ode/src/*.lo -rpath %{_libdir}
-
-%{__make} drawstuff-lib \
-	CC="libtool --mode=compile %{__cc}" \
-	C_FLAGS="-c -fno-rtti -fno-exceptions -ffast-math -Iinclude -DdNODEBUG \
-	%{rpmcflags}"
-libtool --mode=link %{__cxx} -o lib/libdrawstuff.la drawstuff/src/*.lo \
-	-rpath %{_libdir} -L/usr/X11R6/lib -lX11 -lGL -lGLU
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
+%{__automake}
+%configure \
+	--enable-soname
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT{%{_libdir},%{_includedir}}
 
-libtool --mode=install install lib/libode.la $RPM_BUILD_ROOT%{_libdir}
-libtool --mode=install install lib/libdrawstuff.la $RPM_BUILD_ROOT%{_libdir}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT
 
-cp -R include/* $RPM_BUILD_ROOT%{_includedir}
-rm -f $RPM_BUILD_ROOT%{_includedir}/%{name}/README
+mv $RPM_BUILD_ROOT%{_libdir}/libode.so $RPM_BUILD_ROOT%{_libdir}/libode.so.0
+ln -sf libode.so.0 $RPM_BUILD_ROOT%{_libdir}/libode.so
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -91,16 +88,17 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG README
-%attr(755,root,root) %{_libdir}/lib*.so.*.*.*
+%doc CHANGELOG.txt README.txt
+%attr(755,root,root) %{_libdir}/libode.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libode.so.0
 
 %files devel
 %defattr(644,root,root,755)
-%doc ode/{README,TODO} ode/doc/{ode.html,pix}
-%attr(755,root,root) %{_libdir}/lib*.so
-%{_libdir}/lib*.la
-%{_includedir}/*
+%doc ode/{README,TODO} ode/doc/{main.dox,pix}
+%attr(755,root,root) %{_bindir}/ode-config
+%attr(755,root,root) %{_libdir}/libode.so
+%{_includedir}/ode
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libode.a
