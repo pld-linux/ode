@@ -11,11 +11,11 @@ Source0:	http://dl.sourceforge.net/opende/%{name}-src-%{version}.zip
 Patch0:		%{name}-DESTDIR.patch
 URL:		http://ode.org/
 BuildRequires:	OpenGL-devel
+BuildRequires:	XFree86-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
 BuildRequires:	unzip
-BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_noautoreqdep	libGL.so.1 libGLU.so.1
@@ -38,7 +38,7 @@ Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	OpenGL-devel
 Requires:	libstdc++-devel
-Requires:	xorg-lib-libX11-devel
+Requires:	XFree86-devel
 
 %description devel
 Header files for ODE libraries.
