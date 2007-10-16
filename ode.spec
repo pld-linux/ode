@@ -1,15 +1,16 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
 Name:		ode
-Version:	0.8
+Version:	0.9
 Release:	1
 Epoch:		1
-License:	LGPL
+License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/opende/%{name}-src-%{version}.zip
-# Source0-md5:	fb7462ba0af2fbc230cb1b3f79e0acbb
+# Source0-md5:	4c03759b76a0649a6d5108c8e172e1e4
 Patch0:		%{name}-DESTDIR.patch
 URL:		http://ode.org/
+BuildRequires:	OpenGL-GLU
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -27,15 +28,16 @@ like vehicles, objects in virtual reality environments, and virtual
 creatures.
 
 %description -l pl.UTF-8
-Open Dynamics Engine (ODE) jest wolną biblioteką służącą do symulacji
-dynamiki bryły sztywnej. ODE jest użyteczne przy symulacji pojazdów,
-obiektów w przestrzeni wirtualnej i wirtualnych stworzeń.
+Open Dynamics Engine (ODE) jest wolną biblioteką służącą do
+symulacji dynamiki bryły sztywnej. ODE jest użyteczne przy symulacji
+pojazdów, obiektów w przestrzeni wirtualnej i wirtualnych stworzeń.
 
 %package devel
 Summary:	Header files for ODE libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
+Requires:	OpenGL-GLU
 Requires:	OpenGL-devel
 Requires:	libstdc++-devel
 Requires:	xorg-lib-libX11-devel
