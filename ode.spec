@@ -1,21 +1,19 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
 Name:		ode
-Version:	0.9
+Version:	0.10.0
 Release:	1
 Epoch:		1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/opende/%{name}-src-%{version}.zip
-# Source0-md5:	4c03759b76a0649a6d5108c8e172e1e4
-Patch0:		%{name}-DESTDIR.patch
+Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tar.bz2
+# Source0-md5:	e84ff88b34f3a9b96ee479f175fb0b11
 URL:		http://ode.org/
 BuildRequires:	OpenGL-GLU
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
-BuildRequires:	unzip
 BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -62,7 +60,6 @@ Statyczne biblioteki ODE.
 
 %prep
 %setup -q
-%patch0 -p1
 
 %build
 %{__aclocal}
@@ -70,7 +67,7 @@ Statyczne biblioteki ODE.
 %{__autoheader}
 %{__automake}
 %configure \
-	--enable-soname
+	--enable-shared
 %{__make}
 
 %install
@@ -91,14 +88,16 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt README.txt
-%attr(755,root,root) %{_libdir}/libode.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/libode.so.0
+# not sure about ghost here
+%attr(755,root,root) %ghost %{_libdir}/libode-*.so
 
 %files devel
 %defattr(644,root,root,755)
 %doc ode/{README,TODO} ode/doc/{main.dox,pix}
 %attr(755,root,root) %{_bindir}/ode-config
 %attr(755,root,root) %{_libdir}/libode.so
+%{_libdir}/libode.la
 %{_includedir}/ode
 
 %files static
