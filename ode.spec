@@ -9,11 +9,12 @@ Group:		Libraries
 Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tar.bz2
 # Source0-md5:	e84ff88b34f3a9b96ee479f175fb0b11
 URL:		http://ode.org/
-BuildRequires:	OpenGL-GLU
+BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool
 BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,10 +36,7 @@ Summary:	Header files for ODE libraries
 Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
-Requires:	OpenGL-GLU
-Requires:	OpenGL-devel
 Requires:	libstdc++-devel
-Requires:	xorg-lib-libX11-devel
 
 %description devel
 Header files for ODE libraries.
@@ -62,6 +60,7 @@ Statyczne biblioteki ODE.
 %setup -q
 
 %build
+%{__libtoolize}
 %{__aclocal}
 %{__autoconf}
 %{__autoheader}
@@ -76,9 +75,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-mv $RPM_BUILD_ROOT%{_libdir}/libode.so $RPM_BUILD_ROOT%{_libdir}/libode.so.0
-ln -sf libode.so.0 $RPM_BUILD_ROOT%{_libdir}/libode.so
-
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -88,9 +84,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt README.txt
-%attr(755,root,root) %ghost %{_libdir}/libode.so.0
-# not sure about ghost here
-%attr(755,root,root) %ghost %{_libdir}/libode-*.so
+%attr(755,root,root) %{_libdir}/libode-*.so
 
 %files devel
 %defattr(644,root,root,755)
