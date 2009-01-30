@@ -1,13 +1,13 @@
 Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
 Name:		ode
-Version:	0.10.1
+Version:	0.11
 Release:	1
 Epoch:		1
 License:	LGPL v2.1+
 Group:		Libraries
 Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tar.bz2
-# Source0-md5:	91c396b915539a760617437d56eb1681
+# Source0-md5:	ce59bf1e2ea78d92f08e973a99c3069a
 URL:		http://ode.org/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
@@ -91,8 +91,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc ode/{README,TODO} ode/doc/{main.dox,pix}
 %attr(755,root,root) %{_bindir}/ode-config
 %attr(755,root,root) %{_libdir}/libode.so
+%attr(755,root,root) %ghost %{_libdir}/libode.so.1
 %{_libdir}/libode.la
 %{_includedir}/ode
+%{_pkgconfigdir}/ode.pc
 
 %files static
 %defattr(644,root,root,755)
