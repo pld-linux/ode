@@ -1,3 +1,6 @@
+#
+# TODO: assertion "bNormalizationResult" failed in _dNormalize3()
+#
 Summary:	ODE is a library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
 Name:		ode
