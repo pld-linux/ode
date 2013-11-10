@@ -1,27 +1,30 @@
+# TODO:
+# - system libccd
+# - assertion "bNormalizationResult" failed in _dNormalize3()
+#   [what conditions? assert fails when passed 0-length vector, which cannot be normalized]
 #
-# TODO: assertion "bNormalizationResult" failed in _dNormalize3()
-#
-Summary:	ODE is a library for simulating articulated rigid body dynamics
-Summary(pl.UTF-8):	ODE jest biblioteką służącą do symulacji dynamiki bryły sztywnej
+Summary:	ODE - library for simulating articulated rigid body dynamics
+Summary(pl.UTF-8):	ODE - biblioteka służąca do symulacji dynamiki bryły sztywnej
 Name:		ode
-Version:	0.11.1
+Version:	0.12
 Release:	1
 Epoch:		1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://dl.sourceforge.net/opende/%{name}-%{version}.tar.bz2
-# Source0-md5:	c5d51e4c73bff379e5ae18ac218ebba3
+Source0:	http://downloads.sourceforge.net/opende/%{name}-%{version}.tar.bz2
+# Source0-md5:	48fdd41fae1a7e7831feeded09826599
 URL:		http://ode.org/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
 BuildRequires:	autoconf
-BuildRequires:	automake
+BuildRequires:	automake >= 1:1.10
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool
+BuildRequires:	libtool >= 2:2
+BuildRequires:	pkgconfig
+BuildRequires:	python-Cython >= 0.14.1
+BuildRequires:	python-devel >= 1:2.4
 BuildRequires:	xorg-lib-libX11-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		_noautoreqdep	libGL.so.1 libGLU.so.1
 
 %description
 The Open Dynamics Engine (ODE) is a free software library for the
@@ -35,29 +38,41 @@ symulacji dynamiki bryły sztywnej. ODE jest użyteczne przy symulacji
 pojazdów, obiektów w przestrzeni wirtualnej i wirtualnych stworzeń.
 
 %package devel
-Summary:	Header files for ODE libraries
-Summary(pl.UTF-8):	Pliki nagłówkowe bibliotek ODE
+Summary:	Header files for ODE library
+Summary(pl.UTF-8):	Pliki nagłówkowe biblioteki ODE
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 Requires:	libstdc++-devel
 
 %description devel
-Header files for ODE libraries.
+Header files for ODE library.
 
 %description devel -l pl.UTF-8
-Pliki nagłówkowe bibliotek ODE.
+Pliki nagłówkowe biblioteki ODE.
 
 %package static
-Summary:	Static ODE libraries
-Summary(pl.UTF-8):	Statyczne biblioteki ODE
+Summary:	Static ODE library
+Summary(pl.UTF-8):	Statyczna biblioteka ODE
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
-Static ODE libraries.
+Static ODE library.
 
 %description static -l pl.UTF-8
-Statyczne biblioteki ODE.
+Statyczna biblioteka ODE.
+
+%package -n python-ode
+Summary:	Python binding for ODE library
+Summary(pl.UTF-8):	Wiązanie Pythona do biblioteki ODE
+Group:		Libraries/Python
+Requires:	%{name} = %{epoch}:%{version}-%{release}
+
+%description -n python-ode
+Python binding for ODE library.
+
+%description -n python-ode -l pl.UTF-8
+Wiązanie Pythona do biblioteki ODE.
 
 %prep
 %setup -q
@@ -69,14 +84,31 @@ Statyczne biblioteki ODE.
 %{__autoheader}
 %{__automake}
 %configure \
+	--enable-libccd \
 	--enable-shared
 %{__make}
+
+srcdir="$(pwd)"
+cd bindings/python
+CC="%{__cc}" \
+CFLAGS="%{rpmcflags}" \
+CPPFLAGS="%{rpmcppflags} -I$srcdir/include -DdSINGLE" \
+%{__python} setup.py build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
+
+cd bindings/python
+%{__python} setup.py install \
+	--skip-build \
+	--optimize=2 \
+	--root=$RPM_BUILD_ROOT
+
+# obsoleted by pkg-config
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libode.la
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -87,18 +119,23 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc CHANGELOG.txt README.txt
-%attr(755,root,root) %{_libdir}/lib*.so.*.*
+%attr(755,root,root) %{_libdir}/libode.so.*.*.*
+%attr(755,root,root) %ghost %{_libdir}/libode.so.3
 
 %files devel
 %defattr(644,root,root,755)
 %doc ode/{README,TODO} ode/doc/{main.dox,pix}
 %attr(755,root,root) %{_bindir}/ode-config
 %attr(755,root,root) %{_libdir}/libode.so
-%attr(755,root,root) %ghost %{_libdir}/libode.so.1
-%{_libdir}/libode.la
 %{_includedir}/ode
 %{_pkgconfigdir}/ode.pc
 
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libode.a
+
+%files -n python-ode
+%defattr(644,root,root,755)
+%doc bindings/python/TODO.txt
+%attr(755,root,root) %{py_sitedir}/ode.so
+%{py_sitedir}/Open_Dynamics_Engine-0.1-py*.egg-info
