@@ -7,7 +7,7 @@ Summary:	ODE - library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE - biblioteka służąca do symulacji dynamiki bryły sztywnej
 Name:		ode
 Version:	0.12
-Release:	3
+Release:	4
 Epoch:		1
 License:	LGPL v2.1+
 Group:		Libraries
@@ -78,11 +78,6 @@ Wiązanie Pythona do biblioteki ODE.
 %setup -q
 
 %build
-%{__libtoolize}
-%{__aclocal}
-%{__autoconf}
-%{__autoheader}
-%{__automake}
 %configure \
 	--enable-libccd \
 	--enable-shared
@@ -90,10 +85,8 @@ Wiązanie Pythona do biblioteki ODE.
 
 srcdir="$(pwd)"
 cd bindings/python
-CC="%{__cc}" \
-CFLAGS="%{rpmcflags}" \
-CPPFLAGS="%{rpmcppflags} -I$srcdir/include -DdSINGLE" \
-%{__python} setup.py build
+CFLAGS="%{rpmcppflags} -I$srcdir/include -DdSINGLE"
+%py_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -102,10 +95,7 @@ rm -rf $RPM_BUILD_ROOT
 	DESTDIR=$RPM_BUILD_ROOT
 
 cd bindings/python
-%{__python} setup.py install \
-	--skip-build \
-	--optimize=2 \
-	--root=$RPM_BUILD_ROOT
+%py_install
 
 # obsoleted by pkg-config
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libode.la
