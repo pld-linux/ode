@@ -6,13 +6,13 @@
 Summary:	ODE - library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE - biblioteka służąca do symulacji dynamiki bryły sztywnej
 Name:		ode
-Version:	0.12
-Release:	4
+Version:	0.16.2
+Release:	0.2
 Epoch:		1
 License:	LGPL v2.1+
 Group:		Libraries
-Source0:	http://downloads.sourceforge.net/opende/%{name}-%{version}.tar.bz2
-# Source0-md5:	48fdd41fae1a7e7831feeded09826599
+Source0:	https://bitbucket.org/odedevs/ode/downloads/%{name}-%{version}.tar.gz
+# Source0-md5:	13426ae292f4dd007a1b8483b08ecc8d
 URL:		http://ode.org/
 BuildRequires:	OpenGL-GLU-devel
 BuildRequires:	OpenGL-devel
@@ -108,9 +108,9 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc CHANGELOG.txt README.txt
+%doc CHANGELOG.txt README.md
 %attr(755,root,root) %{_libdir}/libode.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libode.so.3
+%attr(755,root,root) %ghost %{_libdir}/libode.so.8
 
 %files devel
 %defattr(644,root,root,755)
@@ -128,4 +128,4 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc bindings/python/TODO.txt
 %attr(755,root,root) %{py_sitedir}/ode.so
-%{py_sitedir}/Open_Dynamics_Engine-0.1-py*.egg-info
+%{py_sitedir}/Open_Dynamics_Engine-0.12-py*.egg-info
