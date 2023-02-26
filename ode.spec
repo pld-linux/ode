@@ -7,7 +7,7 @@ Summary:	ODE - library for simulating articulated rigid body dynamics
 Summary(pl.UTF-8):	ODE - biblioteka służąca do symulacji dynamiki bryły sztywnej
 Name:		ode
 Version:	0.16.2
-Release:	0.2
+Release:	
 Epoch:		1
 License:	LGPL v2.1+
 Group:		Libraries
